@@ -64,9 +64,9 @@ function parseGraph(ast) {
       copyAttr(edge.attr_list, r, 'penwidth', Number.parseFloat);
 
       let source = null;
-      edge.edge_list.forEach((edge, i) => {
-        const target = addNode(edge.id);
-        if (i > 0) {
+      let addEdge = (node) => {
+        const target = addNode(node.id);
+        if (source != null) {
           edges.push(
             Object.assign({}, r, {
               source,
@@ -74,7 +74,15 @@ function parseGraph(ast) {
             })
           );
         }
-        source = target;
+        return target;
+      };
+      edge.edge_list.forEach((edge) => {
+        if (edge.type === 'node_id') {
+          source = addEdge(edge);
+        } else if (edge.type === 'subgraph') {
+          // previous source to all
+          source = edge.children.filter((d) => d.type === 'node_stmt').map((node) => addEdge(node.node_id))[0];
+        }
       });
     });
 
