@@ -13,7 +13,7 @@ export default [
       name: 'ChartGraphsDotParser',
       format: 'umd',
     },
-    external: Object.keys(pkg.peerDependencies),
+    external: Object.keys(pkg.peerDependencies || {}),
     plugins: [commonjs(), pnp(), resolve(), babel({ babelHelpers: 'runtime' })],
   },
   {
@@ -22,7 +22,7 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    external: Object.keys(pkg.peerDependencies).concat(Object.keys(pkg.dependencies)),
+    external: Object.keys(pkg.peerDependencies || {}).concat(Object.keys(pkg.dependencies || {})),
     plugins: [commonjs(), pnp(), resolve()],
   },
 ];

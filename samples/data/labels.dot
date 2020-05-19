@@ -1,0 +1,5 @@
+digraph { 
+    node1[label="Some Complicated Label"]; 
+    node1 -> node2[label="An Edge",color=red]; 
+    node2 -> node3;
+} 

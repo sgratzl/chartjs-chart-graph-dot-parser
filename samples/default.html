@@ -3,6 +3,7 @@
   <head>
     <script src="https://unpkg.com/chart.js@3.0.0-alpha/dist/Chart.js"></script>
     <script src="https://unpkg.com/chartjs-chart-graph@3.0.0-alpha.2/build/Chart.Graphs.js"></script>
+    <script src="../build/Chart.Graphs.DotParser.js"></script>
   </head>
 
   <body>
@@ -10,22 +11,13 @@
       <canvas id="canvas"></canvas>
     </div>
     <script>
-      fetch('./miserables.json')
-        .then((r) => r.json())
+      // data from https://graphs.grevian.org/example
+      fetch('./data/full_digraph.dot')
+        .then((r) => r.text())
         .then((data) => {
           new Chart(document.getElementById('canvas').getContext('2d'), {
             type: 'forceDirectedGraph',
-            data: {
-              labels: data.nodes.map((d) => d.id),
-              datasets: [
-                {
-                  pointBackgroundColor: 'steelblue',
-                  pointRadius: 5,
-                  data: data.nodes,
-                  edges: data.links,
-                },
-              ],
-            },
+            data: ChartGraphsDotParser.parse(data),
             options: {
               legend: {
                 display: false,
