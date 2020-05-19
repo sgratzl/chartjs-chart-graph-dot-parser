@@ -5,6 +5,37 @@
 Helper package for [chartjs-chart-graph](https://github.com/sgratzl/chartjs-chart-graph) for parsing DOT files and generate
 the data structure for the chart.js plugin.
 
+Input:
+
+```dot
+graph {
+    a -- { b c d };
+    b -- { c e };
+    c -- { e f };
+    d -- { f g };
+    e -- h;
+    f -- { h i j g };
+    g -- k;
+    h -- { o l };
+    i -- { l m j };
+    j -- { m n k };
+    k -- { n r };
+    l -- { o m };
+    m -- { o p n };
+    n -- { q r };
+    o -- { s p };
+    p -- { s t q };
+    q -- { t r };
+    r -- t;
+    s -- z;
+    t -- z;
+}
+```
+
+Parsed:
+
+![image](https://user-images.githubusercontent.com/4129778/82336811-4e67a100-99eb-11ea-9afd-b014ccf959d2.png)
+
 ## Install
 
 ```bash
@@ -34,7 +65,7 @@ node attributes
 - `fillcolor` ... set a node background color
 - `shape` ... only supports: `circle`, `diamond`, and `box`
 
-edge attributes
+edge attributes (note: only works with the 3.0.x version of the chartjs-chart-graph plugin due to renaming)
 
 - `color` ... set as edge line/border color
 - `penwidth` ... set as edge line/border width
