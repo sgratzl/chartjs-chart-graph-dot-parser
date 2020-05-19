@@ -123,11 +123,8 @@ function parseGraph(ast) {
 
 export function parse(dot) {
   const ast = parseAst(dot)[0];
-  console.log(ast);
   if (ast && (ast.type === 'graph' || ast.type === 'digraph')) {
-    const r = parseGraph(ast);
-    console.log(r);
-    return r;
+    return parseGraph(ast);
   }
   return {
     labels: [],

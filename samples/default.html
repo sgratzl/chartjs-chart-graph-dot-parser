@@ -12,6 +12,7 @@
       <option value="k6.dot">K6</option>
       <option value="full_digraph.dot">full_digraph</option>
       <option value="labels.dot">labels</option>
+      <option value="large.dot">large</option>
       <option value="path_short.dot">path short</option>
       <option value="path.dot">path</option>
       <option value="simple_digraph.dot">simple digraph</option>
@@ -21,12 +22,16 @@
       <canvas id="canvas"></canvas>
     </div>
     <script>
+      let chart = null;
       function create(ds) {
         // data from https://graphs.grevian.org/example
         fetch(`./data/${ds}`)
           .then((r) => r.text())
           .then((data) => {
-            new Chart(document.getElementById('canvas').getContext('2d'), {
+            if (chart) {
+              chart.destroy();
+            }
+            chart = new Chart(document.getElementById('canvas').getContext('2d'), {
               type: 'forceDirectedGraph',
               data: ChartGraphsDotParser.parse(data),
               options: {
