@@ -1,0 +1,67 @@
+{
+  "name": "chartjs-chart-graph-dot-parser",
+  "description": "Graphviz DOT parser utility for chartjs-chart-graph",
+  "version": "1.0.0-alpha.0",
+  "author": {
+    "name": "Samuel Gratzl",
+    "email": "samu@sgratzl.com",
+    "url": "https://wwww.sgratzl.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgratzl/chartjs-chart-graph-dot-parser.git"
+  },
+  "main": "build/Chart.Graphs.DotParser.js",
+  "unpkg": "build/Chart.Graphs.DotParser.min.js",
+  "module": "build/Chart.Graphs.DotParser.esm.js",
+  "sideEffects": false,
+  "files": [
+    "build",
+    "src/**/*.js"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.9.6",
+    "dotparser": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@rollup/plugin-babel": "^5.0.0",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "@yarnpkg/pnpify": "^2.0.0-rc.22",
+    "babel-jest": "^26.0.1",
+    "chart.js": "^3.0.0-alpha",
+    "chartjs-chart-graph": "^3.0.0-alpha.2",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "release-it": "^13.6.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.10.2",
+    "rollup-plugin-pnp-resolve": "^2.0.0",
+    "uglify-es": "^3.3.9"
+  },
+  "scripts": {
+    "clean": "rimraf build *.tgz",
+    "watch": "rollup -c -w",
+    "lint": "eslint src",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "posttest": "npm run lint",
+    "build:dev": "rollup -c",
+    "build:prod": "npm run build:dev && uglifyjs build/Chart.Graphs.DotParser.js -c -m -o build/Chart.Graphs.DotParser.min.js",
+    "prebuild": "npm run clean && npm test",
+    "build": "npm run build:prod",
+    "format": "prettier --write samples src package.json *.js README.md",
+    "preversion": "npm run test",
+    "prepare": "npm run build:dev",
+    "prepublishOnly": "npm run build:prod",
+    "release": "release-it --disable-metrics --npm.skipChecks",
+    "release:pre": "release-it --disable-metrics --npm.skipChecks --preRelease=alpha --npm.tag=next"
+  }
+}

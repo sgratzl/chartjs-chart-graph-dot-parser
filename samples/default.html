@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/chart.js@3.0.0-alpha/dist/Chart.js"></script>
+    <script src="https://unpkg.com/chartjs-chart-graph@3.0.0-alpha.2/build/Chart.Graphs.js"></script>
+  </head>
+
+  <body>
+    <div style="width: 75%;">
+      <canvas id="canvas"></canvas>
+    </div>
+    <script>
+      fetch('./miserables.json')
+        .then((r) => r.json())
+        .then((data) => {
+          new Chart(document.getElementById('canvas').getContext('2d'), {
+            type: 'forceDirectedGraph',
+            data: {
+              labels: data.nodes.map((d) => d.id),
+              datasets: [
+                {
+                  pointBackgroundColor: 'steelblue',
+                  pointRadius: 5,
+                  data: data.nodes,
+                  edges: data.links,
+                },
+              ],
+            },
+            options: {
+              legend: {
+                display: false,
+              },
+            },
+          });
+        });
+    </script>
+  </body>
+</html>
