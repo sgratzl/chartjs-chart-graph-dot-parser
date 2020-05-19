@@ -7,33 +7,49 @@
   </head>
 
   <body>
+    <select value="simple.dot" id="ds">
+      <option value="simple.dot">Simple</option>
+      <option value="k6.dot">K6</option>
+      <option value="full_digraph.dot">full_digraph</option>
+      <option value="labels.dot">labels</option>
+      <option value="path_short.dot">path short</option>
+      <option value="path.dot">path</option>
+      <option value="simple_digraph.dot">simple digraph</option>
+      <option value="styles.dot">styles</option>
+    </select>
     <div style="width: 75%;">
       <canvas id="canvas"></canvas>
     </div>
     <script>
-      // data from https://graphs.grevian.org/example
-      fetch('./data/styles.dot')
-        .then((r) => r.text())
-        .then((data) => {
-          new Chart(document.getElementById('canvas').getContext('2d'), {
-            type: 'forceDirectedGraph',
-            data: ChartGraphsDotParser.parse(data),
-            options: {
-              elements: {
-                point: {
-                  radius: 10,
-                  hoverRadius: 12,
+      function create(ds) {
+        // data from https://graphs.grevian.org/example
+        fetch(`./data/${ds}`)
+          .then((r) => r.text())
+          .then((data) => {
+            new Chart(document.getElementById('canvas').getContext('2d'), {
+              type: 'forceDirectedGraph',
+              data: ChartGraphsDotParser.parse(data),
+              options: {
+                elements: {
+                  point: {
+                    radius: 10,
+                    hoverRadius: 12,
+                  },
+                  line: {
+                    borderColor: 'black',
+                  },
                 },
-                line: {
-                  borderColor: 'black',
+                legend: {
+                  display: true,
                 },
               },
-              legend: {
-                display: true,
-              },
-            },
+            });
           });
-        });
+      }
+      document.getElementById('ds').addEventListener('change', (e) => {
+        create(e.currentTarget.value);
+      });
+      create(document.getElementById('ds').value);
     </script>
   </body>
 </html>

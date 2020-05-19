@@ -12,7 +12,7 @@
       {
         "imports": {
           "chart.js": "https://unpkg.com/chart.js@3.0.0-alpha/dist/Chart.esm.js",
-          "chartjs-chart-graph": "https://unpkg.com/chartjs-chart-graph@3.0.0-alpha.2?module",
+          "chartjs-chart-graph": "https://unpkg.com/chartjs-chart-graph@3.0.0-alpha.3?module",
           "d3-force": "https://unpkg.com/d3-force?module",
           "d3-hierarchy": "https://unpkg.com/d3-hierarchy?module",
           "chartjs-chart-graph-dot-parser": "../build/Chart.Graphs.DotParser.esm.jss",
@@ -21,25 +21,26 @@
     </script>
     <script type="module-shim">
       import { ForceDirectedGraphChart } from 'chartjs-chart-graph';
+      import { parse } from 'chartjs-chart-graph-dot-parser';
 
-      fetch('./miserables.json')
-        .then((r) => r.json())
+      fetch(`./data/simple.dot`)
+        .then((r) => r.text())
         .then((data) => {
-          new ForceDirectedGraphChart(document.getElementById('canvas').getContext('2d'), {
-            data: {
-              labels: data.nodes.map((d) => d.id),
-              datasets: [
-                {
-                  pointBackgroundColor: 'steelblue',
-                  pointRadius: 5,
-                  data: data.nodes,
-                  edges: data.links,
-                },
-              ],
-            },
+          new Chart(document.getElementById('canvas').getContext('2d'), {
+            type: 'forceDirectedGraph',
+            data: parse(data),
             options: {
+              elements: {
+                point: {
+                  radius: 10,
+                  hoverRadius: 12,
+                },
+                line: {
+                  borderColor: 'black',
+                },
+              },
               legend: {
-                display: false,
+                display: true,
               },
             },
           });
