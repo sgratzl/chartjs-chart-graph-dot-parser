@@ -1,5 +1,6 @@
 digraph { 
-    node1[label="Some Complicated Label"]; 
+    label = "The foo, the bar and the baz";
+    node1[label="Some Complicated Label",color=blue,fillcolor=orange]; 
     node1 -> node2[label="An Edge",color=red]; 
     node2 -> node3;
 } 

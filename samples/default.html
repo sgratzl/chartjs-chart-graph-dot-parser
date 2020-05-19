@@ -12,15 +12,24 @@
     </div>
     <script>
       // data from https://graphs.grevian.org/example
-      fetch('./data/full_digraph.dot')
+      fetch('./data/styles.dot')
         .then((r) => r.text())
         .then((data) => {
           new Chart(document.getElementById('canvas').getContext('2d'), {
             type: 'forceDirectedGraph',
             data: ChartGraphsDotParser.parse(data),
             options: {
+              elements: {
+                point: {
+                  radius: 10,
+                  hoverRadius: 12,
+                },
+                line: {
+                  borderColor: 'black',
+                },
+              },
               legend: {
-                display: false,
+                display: true,
               },
             },
           });
